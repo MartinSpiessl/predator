@@ -148,7 +148,7 @@ test -r "$PRP_FILE" || usage
 # classify the property to be verified
 TASK=""
 if grep "call(reach_error()" "$PRP_FILE" >/dev/null; then
-    TASK="$TASK VERIFIER_error"
+    TASK="$TASK reach_error"
 fi; if grep "valid-memcleanup" "$PRP_FILE" >/dev/null; then
     TASK="$TASK memcleanup"
 fi; if grep "valid-memtrack" "$PRP_FILE" >/dev/null; then
@@ -353,13 +353,13 @@ parse_gcc_output() {
 
         elif match "$line" "$MSG_VERIFIER_ERROR_FOUND"; then
             # an reach_error() has been reached
-            if match "$TASK" "VERIFIER_error"; then
+            if match "$TASK" "reach_error"; then
               report_unsafe "" "$line"
             fi
 
         #elif match "$line" "$MSG_LABEL_FOUND"; then
         #    # an ERROR label has been reached
-        #    if match "$TASK" "VERIFIER_error"; then
+        #    if match "$TASK" "reach_error"; then
         #      report_unsafe "" "$line"
         #    fi
 
@@ -422,7 +422,7 @@ parse_gcc_output() {
     fi
 }
 
-if match "$TASK" "VERIFIER_error"; then
+if match "$TASK" "reach_error"; then
   ARGS="verifier_error_is_error"
 elif match "$TASK" "memcleanup"; then
     ARGS="no_error_recovery,memleak_is_error,exit_leaks"
