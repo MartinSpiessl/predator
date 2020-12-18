@@ -331,7 +331,7 @@ macro(test_predator_regre name_suff ext arg1)
     endforeach()
 endmacro(test_predator_regre)
 
-# default mode -> change error_label:ERROR to function __VERIFIER_error()
+# default mode -> change error_label:ERROR to function reach_error()
 test_predator_regre("" "" "")
 
 # track_uninit mode
