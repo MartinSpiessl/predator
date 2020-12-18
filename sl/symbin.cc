@@ -1150,8 +1150,8 @@ bool handleError(
 {
     const struct cl_loc *loc = &insn.loc;
 
-    // unlike ___sl_error(), __VERIFIER_error() does not take any argument
-    const bool isVerifierError = STREQ(name, "__VERIFIER_error");
+    // unlike ___sl_error(), reach_error() does not take any argument
+    const bool isVerifierError = STREQ(name, "reach_error");
     const unsigned opCntExpected = (isVerifierError) ? 2 : 3;
 
     const CodeStorage::TOperandList &opList = insn.operands;
@@ -1173,7 +1173,7 @@ bool handleError(
     }
 
     if (isVerifierError && !GlConf::data.verifierErrorIsError) {
-        // __VERIFIER_error() called but user does not treat it as error
+        // reach_error() called but user does not treat it as error
         CL_WARN_MSG(loc, name
             << "() reached, analysis of this code path will not continue");
         return true;
@@ -1192,7 +1192,7 @@ bool handleError(
     if (isVerifierError && GlConf::data.verifierErrorIsError) {
         // print the backtrace and leave
         core.printBackTrace(ML_ERROR, /* forcePtrace */ true);
-        throw std::runtime_error("__VERIFIER_error() has been reached");
+        throw std::runtime_error("reach_error() has been reached");
     }
     else
         core.printBackTrace(ML_ERROR);
@@ -1306,7 +1306,7 @@ BuiltInTable::BuiltInTable()
 
     // used in the Competition on Software Verification held at TACAS
     tbl_["__VERIFIER_assume"]                       = handleAssume;
-    tbl_["__VERIFIER_error"]                        = handleError;
+    tbl_["reach_error"]                        = handleError;
     //    __VERIFIER_nondet_*   functions are handled in the above layer
 
     // just to make life easier to our competitors (TODO: check for collisions)
