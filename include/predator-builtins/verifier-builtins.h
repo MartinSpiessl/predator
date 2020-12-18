@@ -113,6 +113,9 @@ static /* inline */ int __VERIFIER_nondet_int(void)
     return i;
 }
 
+void __assert_fail (const char *__assertion, const char *__file,
+      unsigned int __line, const char *__function) {abort();}
+
 #endif
 
 #ifdef __cplusplus
